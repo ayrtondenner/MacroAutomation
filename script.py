@@ -32,8 +32,7 @@ while True:
     # Formatting the HTML string
     formatted_html_string = constants.HTML_STRING.format(title = title, h1 = h1, image_divs_html = image_divs_html, style = constants.STYLE_HTML_STRING)
 
-    # Saving the HTML file with the same name as the folder
-    formatted_html_file = os.path.join(folder_path, f"{os.path.basename(folder_path)}.html")
+    formatted_html_file = os.path.join(folder_path, "index.html")
 
     with open(formatted_html_file, "w") as file:
         file.write(formatted_html_string)
