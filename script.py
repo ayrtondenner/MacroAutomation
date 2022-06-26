@@ -1,4 +1,5 @@
 import os, constants
+from string import Template
 
 while True:
 
@@ -29,8 +30,13 @@ while True:
 
     image_divs_html = "\n".join(image_divs)
 
-    # Formatting the HTML string
-    formatted_html_string = constants.HTML_STRING.format(title = title, h1 = h1, image_divs_html = image_divs_html, style = constants.STYLE_HTML_STRING)
+    # Formatting the HTML file
+
+    with open("template.html", "r", encoding='utf-8') as template_file:
+        template_text = template_file.read()
+
+    #formatted_html_string = template_text.format(title = title, h1 = h1, image_divs_html = image_divs_html)
+    formatted_html_string = Template(template_text).safe_substitute(title = title, h1 = h1, image_divs_html = image_divs_html)
 
     formatted_html_file = os.path.join(folder_path, "index.html")
 
