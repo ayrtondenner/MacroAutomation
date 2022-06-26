@@ -24,9 +24,7 @@ while True:
     image_divs = []
 
     for folder_image in folder_images:
-        image_path = os.path.join(folder_path, folder_image)
-
-        image_div = constants.IMAGE_DIV.format(image_path = image_path)
+        image_div = constants.IMAGE_DIV.format(image_path = folder_image)
         image_divs.append(image_div)
 
     image_divs_html = "\n".join(image_divs)
