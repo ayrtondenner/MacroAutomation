@@ -1,0 +1,1 @@
+python ./album_creator/create_album.py
