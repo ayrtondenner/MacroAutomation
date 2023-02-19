@@ -3,6 +3,9 @@ import album_helper
 from string import Template
 from PIL import Image
 
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 while True:
 
     is_folder_path_valid = False
@@ -35,16 +38,25 @@ while True:
 
         image_full_path = os.path.join(folder_path, folder_image)
 
-        # Resize image for creating thumbnails in template image
-        image = Image.open(image_full_path)
-        thumbnail_size = album_helper.get_image_size_for_thumbnail(image)
-        thumbnail_image = image.resize(thumbnail_size)
-        thumbnail_path = album_helper.get_thumbnail_path(folder_path, folder_image)
-        thumbnail_image.save(thumbnail_path)
-        thumbnail_reduced_path = album_helper.get_reduced_thumbnail_path(folder_image)
+        try:
 
-        image_div = album_helper.get_image_div(folder_image)
-        image_divs.append(image_div)
+            # Resize image for creating thumbnails in template image
+            image = Image.open(image_full_path)
+
+            if image_full_path.endswith("png"):
+                image = image.convert('RGB')
+
+            thumbnail_size = album_helper.get_image_size_for_thumbnail(image)
+            thumbnail_image = image.resize(thumbnail_size)
+            thumbnail_path = album_helper.get_thumbnail_path(folder_path, folder_image)
+            thumbnail_image.save(thumbnail_path)
+            thumbnail_reduced_path = album_helper.get_reduced_thumbnail_path(folder_image)
+
+            image_div = album_helper.get_image_div(folder_image)
+            image_divs.append(image_div)
+
+        except Exception as ex:
+            print(f"Error in image {folder_image}")
 
     image_divs_html = "\n".join(image_divs)
 
